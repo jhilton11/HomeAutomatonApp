@@ -65,18 +65,64 @@
             android:id="@+id/fans_imageView"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/lights_on"/>
+            android:src="@drawable/fan_off"/>
         <CheckBox
             android:id="@+id/cb_Fans_On"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lights On"/>
+            android:text="Fans On"/>
         <CheckBox
             android:id="@+id/cb_Fans_Off"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lights Off"/>
+            android:text="Fans Off"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/tv_imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/tv_off"/>
+        <CheckBox
+            android:id="@+id/cb_Tv_On"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tv On"/>
+        <CheckBox
+            android:id="@+id/cb_Tv_Off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tv Off"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ac_imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/lights_off"/>
+        <CheckBox
+            android:id="@+id/cb_AC_On"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AC On"/>
+        <CheckBox
+            android:id="@+id/cb_AC_Off"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="AC Off"/>
     </LinearLayout>
 
     <LinearLayout

@@ -11,7 +11,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -32,9 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mReceiver;
     IntentFilter intentFilter;
     private TextView tv_connection, tv_msg_sent, tv_msg_received;
-    private CheckBox cb_FansOn, cb_FansOff, cb_LightsOn, cb_LightsOff, cb_TvOn, cb_Tvoff, cb_Terminal1On,
-    cb_Terminal1Off, cb_Terminal2On, cb_Terminal2Off;
-    private ImageView lightsImage, fanImage;
+    private CheckBox cb_FansOn, cb_FansOff, cb_LightsOn, cb_LightsOff, cb_TvOn, cb_TvOff, cb_AcOn, cb_AcOff;
+    private ImageView lightsImage, fanImage, tvImage, acImage;
     private ImageButton btStatusBtn;
     private String bluetoothMsg;
     private String address = "", name = "";
@@ -59,8 +57,14 @@ public class MainActivity extends AppCompatActivity {
         cb_LightsOff = (CheckBox)findViewById(R.id.cb_Lights_Off);
         cb_FansOn = (CheckBox) findViewById(R.id.cb_Fans_On);
         cb_FansOff = (CheckBox) findViewById(R.id.cb_Fans_Off);
+        cb_TvOn = (CheckBox) findViewById(R.id.cb_Tv_On);
+        cb_TvOff = (CheckBox) findViewById(R.id.cb_Tv_Off);
+        cb_AcOn = (CheckBox)findViewById(R.id.cb_AC_On);
+        cb_AcOff = (CheckBox)findViewById(R.id.cb_AC_Off);
         lightsImage = (ImageView)findViewById(R.id.lights_imageView);
         fanImage = (ImageView)findViewById(R.id.fans_imageView);
+        tvImage = (ImageView)findViewById(R.id.tv_imageView);
+        acImage = (ImageView)findViewById(R.id.ac_imageView);
 
         intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED);
@@ -98,6 +102,114 @@ public class MainActivity extends AppCompatActivity {
                         bluetoothMsg = "Lights Off";
                         connectThread.writeMsg("Lights Off");
                         lightsImage.setImageResource(R.drawable.lights_off);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_FansOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_FansOff.setChecked(false);
+                        //bluetoothMsg = "Lights On";
+                        connectThread.writeMsg("Fans On");
+                        fanImage.setImageResource(R.drawable.fan_on);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_FansOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_FansOn.setChecked(false);
+                        //bluetoothMsg = "Lights Off";
+                        connectThread.writeMsg("Fans Off");
+                        fanImage.setImageResource(R.drawable.fan_off);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_TvOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_TvOff.setChecked(false);
+                        bluetoothMsg = "Tv On";
+                        connectThread.writeMsg("Tv On");
+                        tvImage.setImageResource(R.drawable.tv_on);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_TvOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_TvOn.setChecked(false);
+                        bluetoothMsg = "Tv Off";
+                        connectThread.writeMsg("Tv Off");
+                        tvImage.setImageResource(R.drawable.tv_off);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_AcOn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_AcOff.setChecked(false);
+                        bluetoothMsg = "Ac On";
+                        connectThread.writeMsg("Ac On");
+                        acImage.setImageResource(R.drawable.ac_on);
+                    }
+                } else {
+                    compoundButton.setChecked(false);
+                    makeText("Bluetooth is not connected to remote device");
+                    setupBluetooth();
+                }
+            }
+        });
+
+        cb_AcOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (isConnected && isEnabled) {
+                    if (compoundButton.isChecked()) {
+                        cb_AcOn.setChecked(false);
+                        bluetoothMsg = "Ac Off";
+                        connectThread.writeMsg("Ac Off");
+                        acImage.setImageResource(R.drawable.lights_off);
                     }
                 } else {
                     compoundButton.setChecked(false);
@@ -236,17 +348,22 @@ public class MainActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (readMessage.equalsIgnoreCase("Lights On")) {
-                                cb_LightsOn.setChecked(true);
+
+                            if (readMessage.equals("Lights are on")) {
                                 tv_msg_received.setText(readMessage);
-                            } else if (readMessage.equalsIgnoreCase("Lights Off")){
-                                cb_LightsOff.setChecked(true);
+                            } else if (readMessage.equalsIgnoreCase("Lights are off")){
                                 tv_msg_received.setText(readMessage);
-                            } else if (readMessage.equalsIgnoreCase("Fans On")){
-                                cb_LightsOff.setChecked(true);
+                            } else if (readMessage.equalsIgnoreCase("Fans are on")){
                                 tv_msg_received.setText(readMessage);
-                            } else if (readMessage.equalsIgnoreCase("Fans Off")){
-                                cb_LightsOff.setChecked(true);
+                            } else if (readMessage.equalsIgnoreCase("Fans are off")){
+                                tv_msg_received.setText(readMessage);
+                            } else if (readMessage.equalsIgnoreCase("Tv is on")){
+                                tv_msg_received.setText(readMessage);
+                            } else if (readMessage.equalsIgnoreCase("Tv is off")){
+                                tv_msg_received.setText(readMessage);
+                            } else if (readMessage.equalsIgnoreCase("AC is on")){
+                                tv_msg_received.setText(readMessage);
+                            } else if (readMessage.equalsIgnoreCase("AC is off")){
                                 tv_msg_received.setText(readMessage);
                             }
                         }

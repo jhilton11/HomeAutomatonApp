@@ -17,6 +17,7 @@ import java.util.Set;
 public class PairedDevicesActivity extends AppCompatActivity {
     private BluetoothAdapter mAdapter;
     private ArrayList<BluetoothDevice> bluetoothDevices;
+    private ArrayList<String> bluetoothDeviceNames;
     private ListView listView;
 
     @Override
@@ -28,11 +29,14 @@ public class PairedDevicesActivity extends AppCompatActivity {
 
         mAdapter = BluetoothAdapter.getDefaultAdapter();
         bluetoothDevices = new ArrayList<>();
+        bluetoothDeviceNames = new ArrayList<>();
+
         Set<BluetoothDevice> pairedDevices = mAdapter.getBondedDevices();
 
         if (pairedDevices.size() > 0) {
             for (BluetoothDevice device : pairedDevices) {
                 bluetoothDevices.add(device);
+                bluetoothDeviceNames.add(device.getName());
             }
         } else {
             Toast.makeText(this, "No paired device", Toast.LENGTH_SHORT).show();
@@ -41,10 +45,10 @@ public class PairedDevicesActivity extends AppCompatActivity {
             finish();
         }
 
-        ArrayAdapter<BluetoothDevice> arrayAdapter = new ArrayAdapter<BluetoothDevice>(
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_1,
-                bluetoothDevices
+                bluetoothDeviceNames
         );
 
         listView.setAdapter(arrayAdapter);
